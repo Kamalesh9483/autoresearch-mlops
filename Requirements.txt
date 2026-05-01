@@ -1,0 +1,11 @@
+mlflow
+optuna
+torch
+xgboost
+scikit-learn
+pandas
+numpy
+faiss-cpu
+streamlit
+requests
+scipy

@@ -1,0 +1,19 @@
+[project]
+name = "autoreasearch"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "faiss-cpu>=1.13.2",
+    "mlflow>=3.11.1",
+    "numpy>=2.4.4",
+    "optuna>=4.8.0",
+    "pandas>=2.3.3",
+    "requests>=2.33.1",
+    "scikit-learn>=1.8.0",
+    "scipy>=1.17.1",
+    "streamlit>=1.57.0",
+    "torch>=2.11.0",
+    "xgboost>=3.2.0",
+]
