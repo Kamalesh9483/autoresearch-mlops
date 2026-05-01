@@ -1,4 +1,8 @@
 
+
+https://github.com/user-attachments/assets/24d56447-1426-467d-8b4c-a70d138aa003
+
+
 # 🧠 AutoResearch MLOps Pipeline
 
 An agentic AutoML + MLOps system that combines:
@@ -269,5 +273,3 @@ MIT License
 
 ---
 
-
-Just tell 👍
