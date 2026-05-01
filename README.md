@@ -1,59 +1,62 @@
-
+```markdown
 # 🧠 AutoResearch MLOps Pipeline
 
-An **agentic AutoML + MLOps system** that combines:
+An agentic AutoML + MLOps system that combines:
 
-* Hyperparameter optimization (Optuna)
-* Multi-model training (Neural Network + XGBoost)
-* Experiment tracking (MLflow)
-* LLM-guided configuration refinement
-* Memory-driven learning loop
+- Hyperparameter optimization (Optuna)  
+- Multi-model training (Neural Network + XGBoost)  
+- Experiment tracking (MLflow)  
+- LLM-guided configuration refinement using **Ollama (Gemma 2B)**  
+- Memory-driven learning loop  
 
-This project simulates a **self-improving ML system** that learns from past experiments and optimizes itself over time.
+This project demonstrates a self-improving ML system that learns from past experiments and continuously optimizes itself.
 
 ---
 
 # 🚀 Features
 
-* 🔁 **AutoML Loop** with Optuna
-* 🧠 **LLM-guided tuning** every few trials
-* 🗂 **Persistent memory** of past runs
-* 📊 **MLflow experiment tracking**
-* ⚖️ **Multi-model comparison** (NN vs XGBoost)
-* ⏹ **Early stopping logic**
-* 🔄 **Continuous improvement pipeline**
+- 🔁 AutoML loop using Optuna  
+- 🧠 LLM-guided hyperparameter tuning (Gemma 2B via Ollama)  
+- 🗂 Persistent memory of past experiments  
+- 📊 MLflow experiment tracking  
+- ⚖️ Multi-model comparison (NN vs XGBoost)  
+- ⏹ Early stopping logic  
+- 🔄 Continuous improvement system  
 
 ---
 
 # 🏗 Project Structure
 
 ```
+
 autoresearch_mlops/
-│
-├── core.py          # Main orchestration (Optuna loop)
-├── main.py          # Entry point
-├── models.py        # NN + XGBoost training
-├── eval.py          # Evaluation (RMSE)
-├── tracker.py       # MLflow logging
-├── memory.py        # Stores past runs
-├── llm.py           # LLM suggestions
-├── program.md       # Control logic for LLM
-├── mlflow.db        # MLflow database (auto-created)
-└── README.md
+
+core.py          # Main orchestration (Optuna loop)
+main.py          # Entry point
+models.py        # NN + XGBoost training
+eval.py          # Evaluation (RMSE)
+tracker.py       # MLflow logging
+memory.py        # Stores past runs
+llm.py           # LLM (Ollama integration)
+program.md       # Control logic for LLM
+mlflow.db        # MLflow database (auto-created)
+README.md
+
 ```
 
 ---
 
-# ⚙️ How It Works (Flow)
+# ⚙️ How It Works
 
 ```
+
 User Data
    ↓
 Optuna Trial Loop
    ↓
 Config Generation (lr, epochs, model type)
    ↓
-LLM Suggestion (every 5 trials)
+LLM Suggestion (Gemma 2B via Ollama every few trials)
    ↓
 Model Training (NN or XGB)
    ↓
@@ -66,74 +69,118 @@ Memory Update
 Early Stopping Check
    ↓
 Repeat
+
 ```
 
 ---
 
-# 🧠 Key Components
+# 🧠 LLM Integration (Ollama + Gemma 2B)
 
-## 1. Optuna (AutoML Engine)
+This project uses a **local LLM** to guide hyperparameter tuning.
 
-* Explores hyperparameters
-* Minimizes RMSE
-* Stops early if performance stabilizes
+### Why Gemma 2B?
+- Lightweight (runs locally)
+- Fast inference
+- No API cost
+- Good enough for structured suggestions
 
-## 2. LLM Suggestion Engine
+---
 
-* Uses past runs (`memory`)
-* Reads `program.md`
-* Suggests improved configs periodically
+## 🔧 Install Ollama
 
-## 3. Memory Module
+Download and install:
 
-* Stores previous trials
-* Enables learning across iterations
+https://ollama.com
 
-## 4. Tracker (MLflow)
+---
 
-* Logs:
+## 📥 Pull Gemma model
 
-  * parameters
-  * metrics
-  * models
-* Enables experiment comparison
+```
+
+ollama pull gemma:2b
+
+```
+
+---
+
+## ▶️ Run model
+
+```
+
+ollama run gemma:2b
+
+```
+
+---
+
+## ⚙️ Start Ollama server
+
+```
+
+ollama serve
+
+```
+
+API will run at:
+
+```
+
+[http://localhost:11434](http://localhost:11434)
+
+```
+
+---
+
+## 🧠 How LLM is used
+
+- Reads past runs from memory  
+- Reads `program.md` (rules + strategy)  
+- Suggests better hyperparameters  
+- Injected into Optuna loop every few trials  
 
 ---
 
 # 📦 Installation
 
-## 1. Clone repo
+## 1. Clone Repository
 
-```bash
-git clone https://github.com/Kamalesh9483/autoresearch-mlops.git
+```
+
+git clone [https://github.com/your-username/autoresearch-mlops.git](https://github.com/your-username/autoresearch-mlops.git)
 cd autoresearch-mlops
+
 ```
 
 ---
 
-## 2. Create environment (recommended)
+## 2. Create Virtual Environment
 
-Using `uv`:
+### Using uv (recommended)
+```
 
-```bash
 uv venv
-uv pip install -r Requirements.txt
+uv pip install -r requirements.txt
+
 ```
 
-OR using pip:
+### Using pip
+```
 
-```bash
 python -m venv venv
-venv\Scripts\activate   # Windows
-pip install -r Requirements.txt
+venv\Scripts\activate
+pip install -r requirements.txt
+
 ```
 
 ---
 
-## 3. Install dependencies
+## 3. Install Dependencies
 
-```bash
+```
+
 pip install torch optuna mlflow xgboost pandas scikit-learn
+
 ```
 
 ---
@@ -142,56 +189,64 @@ pip install torch optuna mlflow xgboost pandas scikit-learn
 
 ## Step 1 — Start MLflow Server
 
-⚠️ Use **absolute path** (important)
+⚠️ Use absolute path
 
-```powershell
-mlflow server --backend-store-uri sqlite:///C:/Autoresearch/autoresearch_mlops/mlflow.db --default-artifact-root ./mlruns --host 127.0.0.1 --port 5000
+```
+
+mlflow server --backend-store-uri sqlite:///C:/Autoreasearch/autoresearch_mlops/mlflow.db --default-artifact-root ./mlruns --host 127.0.0.1 --port 5000
+
 ```
 
 ---
 
-## Step 2 — Run Training
+## Step 2 — Start Ollama
 
-```bash
+```
+
+ollama serve
+
+```
+
+---
+
+## Step 3 — Run Training
+
+```
+
 uv run main.py
-```
 
-You should see:
-
-```
-Trial 0 finished...
-Trial 1 finished...
 ```
 
 ---
 
-## Step 3 — Open MLflow UI
+## Step 4 — Open MLflow UI
 
 ```
-http://127.0.0.1:5000
+
+[http://127.0.0.1:5000](http://127.0.0.1:5000)
+
 ```
 
 Select experiment:
 
 ```
+
 autoresearch_mlops
+
 ```
 
 ---
 
-# 📊 What You’ll See in MLflow
+# 📊 MLflow Output
 
-* Experiment: `autoresearch_mlops`
-* Runs = Optuna trials
-* Metrics:
-
-  * RMSE
-* Parameters:
-
-  * model type
-  * learning rate
-  * epochs
-* Model artifacts
+- Experiment: `autoresearch_mlops`  
+- Runs = Optuna trials  
+- Metrics: RMSE  
+- Parameters:
+  - model type  
+  - learning rate  
+  - epochs  
+- Model artifacts  
 
 ---
 
@@ -199,71 +254,95 @@ autoresearch_mlops
 
 ## ❌ Experiment not showing
 
-✔ Fix: Ensure same tracking URI everywhere
+**Fix:**
+```
 
-```python
-mlflow.set_tracking_uri("sqlite:///C:/Autoresearch/autoresearch_mlops/mlflow.db")
+mlflow.set_tracking_uri("sqlite:///C:/Autoreasearch/autoresearch_mlops/mlflow.db")
+
 ```
 
 ---
 
-## ❌ Only "Default" experiment appears
+## ❌ Only "Default" experiment visible
 
-✔ Cause:
+**Cause:** Different DB paths  
 
-* Training and server using different DB
-
-✔ Fix:
-
-* Use **absolute path**
+**Fix:** Use absolute path everywhere  
 
 ---
 
-## ❌ UnboundLocalError (mlflow)
+## ❌ Ollama not responding
 
-✔ Cause:
+- Ensure `ollama serve` is running  
+- Check port `11434`  
 
-* Import inside function
+---
 
-✔ Fix:
+## ❌ LLM not influencing results
 
-```python
-import mlflow.sklearn  # move to top
-```
+- Check `llm.py` is called  
+- Ensure `program.md` has logic  
+- Verify memory updates  
 
 ---
 
 ## ❌ Model logging warning (predict missing)
 
-✔ Cause:
+**Cause:** PyTorch model logged via sklearn  
 
-* PyTorch model used with sklearn logger
-
-✔ Fix (optional):
-
-```python
-import mlflow.pytorch
-mlflow.pytorch.log_model(model, "model")
+**Fix (optional):**
 ```
 
+import mlflow.pytorch
+mlflow.pytorch.log_model(model, "model")
 
-# 💡 Concept
-
-This project demonstrates:
-
-> **“Self-improving ML systems using feedback loops, memory, and LLM reasoning.”**
-
-It moves beyond static ML pipelines into:
-
-* Adaptive systems
-* Intelligent experimentation
-* Agentic AI workflows
+```
 
 ---
 
+# 🔮 Future Improvements
+
+- SHAP explainability  
+- Data drift detection  
+- Kubeflow pipeline  
+- Autonomous feature engineering  
+- Advanced LLM strategies  
+- Real-time dashboards  
+
+---
+
+# 💡 Concept
+
+Self-improving ML systems using:
+
+- Feedback loops  
+- Memory  
+- LLM reasoning  
+
+This moves beyond static pipelines into:
+
+- Adaptive systems  
+- Agentic AI  
+- Continuous learning pipelines  
+
+---
+
+# 🤝 Contributing
+
+- Add models  
+- Improve LLM logic  
+- Enhance tracking  
+- Optimize pipeline  
+
+---
 
 # 📜 License
 
-MIT License
+MIT License  
 
+---
 
+# ⭐ Support
+
+If you found this useful, consider giving it a ⭐ on GitHub!
+```
