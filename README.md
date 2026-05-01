@@ -44,23 +44,23 @@ autoresearch_mlops/
 # ⚙️ How It Works
 
 User Data
-   ↓
+↓
 Optuna Trial Loop
-   ↓
+↓
 Config Generation (lr, epochs, model type)
-   ↓
+↓
 LLM Suggestion (Gemma 2B via Ollama every few trials)
-   ↓
+↓
 Model Training (NN or XGB)
-   ↓
+↓
 Evaluation (RMSE)
-   ↓
+↓
 MLflow Logging
-   ↓
+↓
 Memory Update
-   ↓
+↓
 Early Stopping Check
-   ↓
+↓
 Repeat
 
 ---
